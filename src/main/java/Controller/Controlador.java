@@ -21,6 +21,8 @@ public class Controlador {
 	public void registro(String nick, String pass, String fecha, String ruta) {
 		// TODO Auto-generated method stub
 		
+		System.out.println(fecha);
+		
 		app.registro(nick, pass, fecha, ruta);	
 		
 	}

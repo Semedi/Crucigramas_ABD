@@ -92,12 +92,14 @@ public class Aplicacion {
 		byte[] blob = null;
 				
 		try {
-			date = parseFecha(fecha);
+			date = parseFecha(fecha);	
 			blob =ImageConverter.Imageconverter(ruta);
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 		
 		}
+		
+		System.out.println(date);
 		
 		UsuariosMapper um = new UsuariosMapper(_database.getDataSource());
 		Usuario u = new Usuario(nick, pass,date,blob );
@@ -109,15 +111,21 @@ public class Aplicacion {
 		
 	}
 
+	@SuppressWarnings("deprecation")
 	public Date parseFecha(String fecha) throws Exception{
 		String[] partido = fecha.split("/");
 		
 		
-		int dia = Integer.parseInt(partido[0]);
+		int dia = Integer.parseInt(partido[2]);
 		int mes = Integer.parseInt(partido[1]);
-		int año = Integer.parseInt(partido[2]);
+		int año = Integer.parseInt(partido[0]);
 		
-		return (new Date(año, mes, dia));
+		mes--;
+		año-=1900;
+			
+		Date fecha1 = new Date(año, mes, dia);
+		
+		return (fecha1);
 	}
 	
 	public boolean isLogin() {
@@ -237,8 +245,7 @@ public class Aplicacion {
 			
 			aux = cm.findById((Integer)lista.get(i));
 			
-			System.out.println(aux.getTitulo());
-			System.out.println("hola");
+			
 			
 			crucigramas[i][0] = aux.getTitulo();
 			crucigramas[i][1] = ""+aux.getFecha();
