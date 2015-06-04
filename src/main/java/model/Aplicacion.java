@@ -32,6 +32,7 @@ import Observer.CrosswordObserver;
 import Observer.FriendObserver;
 import Observer.LoginObserver;
 import Observer.RequestObserver;
+import Observer.userObserver;
 
 public class Aplicacion {
 
@@ -44,6 +45,7 @@ public class Aplicacion {
 	private CrosswordObserver _cobs;
 	private FriendObserver _aobs;
 	private RequestObserver _robs;
+	private userObserver _uobs;
 
 	public Aplicacion() throws SQLException, IOException, PropertyVetoException {
 		_login = false;
@@ -75,7 +77,7 @@ public class Aplicacion {
 				 
 			 }
 			 
-				_lobs.onLogin(nick,ImageConverter.arrayToImage(u.getFoto()) , edad);
+				_lobs.onLogin(nick,ImageConverter.arrayToImage(u.getFoto()) , edad, u.getFechaNacimiento().toString(), pass);
 			
 				// TODO Auto-generated catch block
 				
@@ -113,7 +115,7 @@ public class Aplicacion {
 
 	@SuppressWarnings("deprecation")
 	public Date parseFecha(String fecha) throws Exception{
-		String[] partido = fecha.split("/");
+		String[] partido = fecha.split("-");
 		
 		
 		int dia = Integer.parseInt(partido[2]);
@@ -136,6 +138,7 @@ public class Aplicacion {
 	
 	
 /*Metodos que añaden observadores -------------->*/
+	
 	public void addObserver(LoginObserver observador) {
 		// TODO Auto-generated method stub
 
@@ -163,13 +166,18 @@ public class Aplicacion {
 	
 	
 
-
-
 	public void AddObserver(RequestObserver obs) {
 		// TODO Auto-generated method stub
 		_robs=obs;
 		
 	}
+	
+	
+	public void AddObserver(userObserver obs) {
+		// TODO Auto-generated method stub
+		_uobs=obs;
+	}
+
 
 	/*---------------------------------------------------------------*/
 
@@ -373,6 +381,37 @@ public class Aplicacion {
 		
 		return null;
 	}
+	
+	
+	
+	public void modificar(String pass, String fecha, String ruta) {
+		// TODO Auto-generated method stub
+		
+		Date date = null;
+		byte[] blob = null;
+				
+		try {
+			date = parseFecha(fecha);	
+			blob =ImageConverter.Imageconverter(ruta);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+		
+		}
+		
+	
+		
+		UsuariosMapper um = new UsuariosMapper(_database.getDataSource());
+		Usuario u = new Usuario(_user, pass,date,blob );
+		
+		um.update(u);
+		
+		
+		
+		
+		_uobs.onRefresh(ImageConverter.arrayToImage(blob), 115 - u.getFechaNacimiento().getYear());
+		
+		
+	}
 
 
 
@@ -389,6 +428,7 @@ public class Aplicacion {
 
 	public static class ImageConverter {
 
+		@SuppressWarnings("resource")
 		public static byte[] Imageconverter(String ruta) throws Exception {
 
 			File file = new File(ruta);
@@ -398,7 +438,6 @@ public class Aplicacion {
 				fis = new FileInputStream(file);
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
 
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -460,9 +499,6 @@ public class Aplicacion {
 		}
 
 	}// Image converter
-
-
-
 
 
 

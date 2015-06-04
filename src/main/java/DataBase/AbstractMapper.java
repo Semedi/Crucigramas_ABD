@@ -85,7 +85,7 @@ public abstract class AbstractMapper<T, K> {
 				
 		} catch ( SQLException e){
 			e.printStackTrace();
-			System.out.println("EXcepcion");
+			
 					
 		}
 		

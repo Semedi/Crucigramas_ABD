@@ -6,6 +6,7 @@ import Observer.CrosswordObserver;
 import Observer.FriendObserver;
 import Observer.LoginObserver;
 import Observer.RequestObserver;
+import Observer.userObserver;
 import model.Aplicacion;
 import model.Palabra;
 
@@ -21,7 +22,7 @@ public class Controlador {
 	public void registro(String nick, String pass, String fecha, String ruta) {
 		// TODO Auto-generated method stub
 		
-		System.out.println(fecha);
+		
 		
 		app.registro(nick, pass, fecha, ruta);	
 		
@@ -93,6 +94,11 @@ public class Controlador {
 		
 	}
 
+	public void AddObserver(userObserver obs) {
+		// TODO Auto-generated method stub
+		app.AddObserver(obs);
+		
+	}
 
 	public Object[][] getAyuda() {
 		// TODO Auto-generated method stub
@@ -118,6 +124,12 @@ public class Controlador {
 	public Palabra[] getPalabras(String crucigrama) {
 		// TODO Auto-generated method stub
 		return app.getPalabras(crucigrama);
+	}
+
+
+	public void modificar(String pass, String fecha, String ruta) {
+		// TODO Auto-generated method stub
+		app.modificar(pass, fecha, ruta);	
 	}
 	
 

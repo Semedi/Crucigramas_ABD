@@ -1,29 +1,39 @@
 package GUI;
 
 import java.awt.BorderLayout;
+import java.awt.Button;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.File;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
 
 import Controller.Controlador;
+import Observer.userObserver;
+
 
 
 /*Ventana principal con todas las pestañas*/
-public class MainView extends JFrame {
+public class MainView extends JFrame implements userObserver {
 	
 	/**
 	 * 
@@ -32,7 +42,13 @@ public class MainView extends JFrame {
 	private Controlador controlador;
 	private String Username;
 	
-	public MainView(Controlador controlador, String Username, ImageIcon avatar, int edad) {
+	
+	private JLabel infoUser;
+	private JLabel infoEdad;
+	private JLabel infoPuntos;
+	private JButton avatar;
+	
+	public MainView(Controlador controlador, String Username, ImageIcon avatar, int edad, String fecha, String pass) {
 		
 		super("");
 		this.Username = Username;
@@ -43,7 +59,10 @@ public class MainView extends JFrame {
 		
 		JPanel principal = new JPanel();
 		
-		build(principal, edad, avatar);
+		build(principal, edad, avatar, fecha, pass);
+		this.controlador.AddObserver(this);
+		
+		
 		this.add(principal);
 		this.setVisible(true);
 	
@@ -52,7 +71,7 @@ public class MainView extends JFrame {
 	
 	
 	
-	private  void build(JPanel panel, int edad, ImageIcon imagen){
+	private  void build(JPanel panel, int edad, final ImageIcon imagen, final String fecha, final String pass){
 		
 		
 		panel.setLayout(new BorderLayout());
@@ -67,37 +86,49 @@ public class MainView extends JFrame {
 		
 		
 		
-		JLabel avatar = new JLabel("");	
+		 avatar = new JButton("");	
+		avatar.setBorderPainted(false);
+	
+		
 			
 				
 		try{
-			
 		
 		avatar.setIcon(imagen);
-		avatar.setBorder(BorderFactory.createEmptyBorder(20,20,5,200));
-		
 		}
 		catch (NullPointerException e){}
+		
+		avatar.addActionListener(
+				new ActionListener() {					
+					@Override
+					public void actionPerformed(ActionEvent e) {						
+						new userMod(Username, fecha, imagen, pass);								
+					}			
+				});
+		
+		
 		
 		JPanel aux = new JPanel();
 		aux.setLayout(new BorderLayout());
 		
-		JLabel infoUser = new JLabel(Username);
-		JLabel infoEdad = new JLabel(edad+" años");
-		JLabel infoPuntos = new JLabel("0 puntos");
+		 infoUser = new JLabel(Username);
+		 infoEdad = new JLabel(edad+" años");
+		 infoPuntos = new JLabel("0 puntos");
 		
 		aux.add(infoUser, BorderLayout.NORTH);
 		aux.add(infoEdad, BorderLayout.CENTER);
 		aux.add(infoPuntos, BorderLayout.SOUTH);
 		
 		aux.setBorder(BorderFactory.createEmptyBorder(30,0,30,0));
+	
 		
 		
 		cabecera.add(avatar, BorderLayout.WEST);
 		cabecera.add(aux, BorderLayout.CENTER);
 		
-	
 		
+	
+		/*****************************************************************************************/
 		/*-----------------Parte de las pestañas en el centro -----------------------------------*/
 		JTabbedPane pestañas = new JTabbedPane();
 		
@@ -140,5 +171,203 @@ public class MainView extends JFrame {
 		
 		
 	}
+	
+	
+
+	/*    Clase Privada  que crea un JFrame para modificar el usuario
+	 * ----------------------------------------------------------------------------*/
+								
+				
+				private class userMod extends JFrame{
+					
+					/**
+					 * 
+					 */
+					private static final long serialVersionUID = 1L;
+					private JTextField _userText;
+					private JPasswordField _passwordText;
+					private JTextField _fecha;
+					private JTextField _ruta;
+					
+					private userMod(String usuario, String fecha,ImageIcon image, String pass){
+						super("Modificar usuario");	
+					
+						
+						
+						
+						this.setSize(400, 200);
+						this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+						this.setLocation(600,380);
+
+						/*Panel donde vamos a poner todos los componentes*/
+						JPanel principal = new JPanel();
+						build(principal, usuario, fecha, image, pass);
+						this.add(principal);
+						
+						this.setVisible(true);		
+						
+					}
+					
+					
+					private void cerrarVentana(){
+						this.dispose();
+					}
+					
+					
+					private void build(JPanel panel, String usuario, String fecha, ImageIcon avatar, String pass) {
+
+						panel.setLayout(null);
+
+						/* etiqueta usuario*/
+						JLabel userLabel = new JLabel("Nombre de usuario:");
+						userLabel.setBounds(10, 10, 120, 25);
+						panel.add(userLabel);
+
+						/* Campo a rellenar al lado de la etiqueta usuario*/
+						this._userText = new JTextField(20);
+						this._userText.setBounds(130, 10, 160, 25);
+						this._userText.setText(usuario);
+						panel.add(this._userText);
+
+						/* etiqueta de contraseña*/
+						JLabel passwordLabel = new JLabel("Contraseña:");
+						passwordLabel.setBounds(10, 40, 80, 25);
+						panel.add(passwordLabel);
+
+						/* campo a rellenar para la etiqueta de contraseña*/
+						this._passwordText = new JPasswordField(20);
+						this._passwordText.setBounds(130, 40, 160, 25);
+						this._passwordText.setText(pass);
+						panel.add(this._passwordText);
+						
+						JLabel fechaLabel = new JLabel("Nacimiento:");
+						fechaLabel.setBounds(10,70,80,25);
+						panel.add(fechaLabel);
+						
+						this._fecha= new JTextField(20);
+						this._fecha.setBounds(130,70,80,25);
+						this._fecha.setText(fecha);
+						panel.add(_fecha);
+						
+						
+						
+						
+						JLabel avatarU = new JLabel("");	
+					
+						
+							
+								
+						try{
+						
+						avatarU.setIcon(avatar);
+						}
+						catch (NullPointerException e){}
+						
+						JLabel avatarLabel = new JLabel("Avatar:");
+						avatarLabel.setBounds(10, 100, 80, 25);
+						panel.add(avatarLabel);
+					
+						
+						
+						this._ruta = new JTextField(20);
+						this._ruta.setBounds(130,100,80,25);
+						
+						panel.add(_ruta);
+						
+						
+						
+						
+						
+						Button fileButton = new Button("Examinar");
+						fileButton.setBounds(220,100,80,25);
+						
+						fileButton.addActionListener(
+								new ActionListener() {					
+									@Override
+									public void actionPerformed(ActionEvent e) {
+										
+										JFileChooser fileChooser = new JFileChooser();
+								        int returnValue = fileChooser.showOpenDialog(null);
+									        if (returnValue == JFileChooser.APPROVE_OPTION) {
+									          File selectedFile = fileChooser.getSelectedFile();
+									          
+									          
+									          _ruta.setText(selectedFile.getAbsolutePath());
+									         
+									        }
+									} 
+											
+								});
+						
+						
+						
+						panel.add(fileButton);
+						
+						
+
+						
+						/*Los dos botones: Aceptar y Nuevo usuario*/
+						JButton loginButton = new JButton("Aceptar");
+						loginButton.setBounds(135, 130, 80, 25);
+						
+						loginButton.addActionListener(
+								new ActionListener() {					
+									@SuppressWarnings("deprecation")
+									@Override
+									public void actionPerformed(ActionEvent e) {
+										
+										
+										controlador.modificar(_passwordText.getText(),
+												_fecha.getText(), _ruta.getText()
+												);
+										
+										
+										JOptionPane.showMessageDialog(null,
+												"Usuario modificado",
+												"Infor",
+												JOptionPane.INFORMATION_MESSAGE
+												);
+										
+										cerrarVentana();
+										
+										
+										
+										
+									}			
+								});
+						
+						
+						
+						panel.add(loginButton);
+						
+					}
+				
+					
+				}
+
+
+
+				@Override
+				public void onRefresh(ImageIcon avatar,
+						int edad) {
+					// TODO Auto-generated method stub
+					
+
+			
+					this.avatar.setIcon(avatar);
+					this.infoEdad.setText(edad+" años");
+					
+					
+					
+					
+				}
+				
+	/*----------------------------------------------------------------------------------*/
+	
+	
+	
 
 }
+
+
+

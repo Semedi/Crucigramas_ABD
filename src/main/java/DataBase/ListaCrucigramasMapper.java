@@ -67,7 +67,7 @@ public class ListaCrucigramasMapper extends AbstractMapper<ListaCrucigramas, Str
 			pst.setObject(1, nick);
 			pst.setObject(2, 1);
 			
-			System.out.println(pst);
+		
 			
 			
 			try(ResultSet rs = pst.executeQuery()) {
@@ -77,7 +77,7 @@ public class ListaCrucigramasMapper extends AbstractMapper<ListaCrucigramas, Str
 										
 					lista.add(rs.getInt(cadena));
 					
-					System.out.println("la lista tiene : "+lista.size());
+					
 					
 						
 				}

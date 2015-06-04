@@ -69,7 +69,6 @@ public class ListaAyudaMapper extends AbstractMapper<ListaAyuda, Object>{
 			
 			pst.setObject(1, nick);
 			
-			System.out.println(pst);
 			
 			try(ResultSet rs = pst.executeQuery()) {
 				
@@ -78,7 +77,6 @@ public class ListaAyudaMapper extends AbstractMapper<ListaAyuda, Object>{
 					
 					lista.add(rs.getString(cadena)+" "+rs.getString("id_crucigrama"));
 					
-					System.out.println("la lista tiene : "+lista.size());
 				
 				}
 			}

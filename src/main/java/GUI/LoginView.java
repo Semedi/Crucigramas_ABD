@@ -120,10 +120,10 @@ public class LoginView extends JFrame implements LoginObserver {
 
 
 	@Override
-	public void onLogin(String Username, ImageIcon avatar, int edad) {
+	public void onLogin(String Username, ImageIcon avatar, int edad, String fecha, String pass) {
 		// TODO Auto-generated method stub
 		this.dispose();
-		MainView view =new MainView(_controlador, Username, avatar, edad);
+		MainView view =new MainView(_controlador, Username, avatar, edad, fecha, pass);
 		
 	}
 
@@ -139,8 +139,15 @@ public class LoginView extends JFrame implements LoginObserver {
 				JOptionPane.ERROR_MESSAGE
 				);
 		
-		
-	}
+		}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	/*    Clase Privada  que crea un JFrame para el nuevo Usuario
 	 * ----------------------------------------------------------------------------*/
@@ -207,7 +214,7 @@ public class LoginView extends JFrame implements LoginObserver {
 						
 						this._fecha= new JTextField(20);
 						this._fecha.setBounds(130,70,80,25);
-						this._fecha.setText("año/mes/dia");
+						this._fecha.setText("año-mes-dia");
 						panel.add(_fecha);
 						
 						JLabel avatarLabel = new JLabel("Avatar:");

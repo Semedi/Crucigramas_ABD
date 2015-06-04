@@ -78,18 +78,17 @@ public class AmigosMapper extends AbstractMapper <Amigos, String[]>{
 			
 			pst.setObject(1, nick);
 			
-			System.out.println(pst);
+			
 			
 			
 			try(ResultSet rs = pst.executeQuery()) {
 				
-				System.out.println("la lista tiene : "+lista.size());
-				System.out.println("LISTA DE HAMIJOOOOOOOS");
+				
 				while(rs.next()){
 					
 					lista.add(rs.getString(cadena));
 					
-					System.out.println("la lista tiene : "+lista.size());
+					
 				
 				}
 			}
