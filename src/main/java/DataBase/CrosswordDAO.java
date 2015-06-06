@@ -105,9 +105,10 @@ public class CrosswordDAO {
 	 * Añade un crucigrama a la lista de crucigramas activos de un usuario.
 	 * 
 	 * El crucigrama se especifica mediante su clave
+	 * @throws SQLException 
 	 */
 	
-		public void addCrosswordToUser(String nick, Object crosswordId) {
+		public void addCrosswordToUser(String nick, Object crosswordId) throws SQLException {
 			
 			ListaCrucigramasMapper lcm = new ListaCrucigramasMapper(ds);
 			ListaCrucigramas lista = new ListaCrucigramas(nick,(Integer) crosswordId,true);

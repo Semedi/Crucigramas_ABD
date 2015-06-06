@@ -4,10 +4,12 @@ import es.ucm.abd.crossword.WordModel;
 
 
 public class Palabra implements WordModel {
+	
 	private int x;
 	private int y;
 	private String word;
 	private boolean horizontal;
+	
 	
 
 	public Palabra(int x, int y, String word, boolean horizontal) {
@@ -68,6 +70,7 @@ public class Palabra implements WordModel {
 		// TODO Auto-generated method stub
 		return this.word;
 	}
+
 	
 	
 

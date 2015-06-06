@@ -52,6 +52,8 @@ public abstract class AbstractMapper<T, K> {
 		
 		String sql = "SELECT " + StringUtils.join(columnNames, ", ") + " FROM "
 				+ tableName + " WHERE "+ keyColumnName + " = ?";
+		
+		
 		try (Connection con = ds.getConnection();
 			 PreparedStatement pst = con.prepareStatement(sql)) {
 			

@@ -16,8 +16,7 @@ public class Usuario {
 		this.nick = nick;
 		this.password= password;
 		this.fechaNacimiento = fechaNacimiento;
-		this.foto = foto;
-		
+		this.foto = foto;		
 	}
 	
 	public String getPassword(){
@@ -43,14 +42,11 @@ public class Usuario {
 	}
 	
 	public void setNick(String nick){
-		this.nick=nick;
-		
+		this.nick=nick;	
 	}
 	
 	public void setPassword(String password){
-		this.password=password;
-		
-		
+		this.password=password;	
 	}
 
 

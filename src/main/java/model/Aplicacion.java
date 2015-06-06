@@ -61,7 +61,7 @@ public class Aplicacion {
 		Usuario u = um.findById(nick);
 		
 		
-		System.out.println(u.getFechaNacimiento());
+
 		
 		 if (u == null) _lobs.onFailed();
 		 else if (u.getPassword().equals(pass)){ 
@@ -375,6 +375,7 @@ public class Aplicacion {
 		// TODO Auto-generated method stub
 		
 		CrucigramasMapper cm = new CrucigramasMapper(_database.getDataSource());
+		
 		Crucigrama aux=cm.findById(cm.getLista(crucigrama).get(0));
 		
 		

@@ -184,7 +184,6 @@ public class MainView extends JFrame implements userObserver {
 					 * 
 					 */
 					private static final long serialVersionUID = 1L;
-					private JTextField _userText;
 					private JPasswordField _passwordText;
 					private JTextField _fecha;
 					private JTextField _ruta;
@@ -224,10 +223,10 @@ public class MainView extends JFrame implements userObserver {
 						panel.add(userLabel);
 
 						/* Campo a rellenar al lado de la etiqueta usuario*/
-						this._userText = new JTextField(20);
-						this._userText.setBounds(130, 10, 160, 25);
-						this._userText.setText(usuario);
-						panel.add(this._userText);
+						JLabel userText = new JLabel(usuario);
+						userText.setBounds(130, 10, 160, 25);
+						
+						panel.add(userText);
 
 						/* etiqueta de contraseña*/
 						JLabel passwordLabel = new JLabel("Contraseña:");
