@@ -40,11 +40,6 @@ public class RequestView extends JPanel implements RequestObserver {
 		controlador.AddObserver(this);
 		
 		
-		Object[][] datos ={
-				{"Kosmo", "Banderas"},
-				{"Kosmo", "Crucigramas del dia"}					
-		};
-		
 		Object[][]datos2 = controlador.getAyuda();
 		
 		_tmodel = new DefaultTableModel(datos2,_columnNames);

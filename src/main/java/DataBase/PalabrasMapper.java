@@ -1,16 +1,19 @@
 package DataBase;
 
+import java.sql.Blob;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
-import model.Word;
+import model.Palabra;
+import model.Usuario;
 
 
 
-public class PalabrasMapper extends AbstractMapper<Word, Integer>{
+public class PalabrasMapper extends AbstractMapper<Palabra, Integer>{
 
 	public PalabrasMapper(DataSource ds) {
 		super(ds);
@@ -44,16 +47,26 @@ public class PalabrasMapper extends AbstractMapper<Word, Integer>{
 	}
 
 	@Override
-	protected Object[] getKeyValues(Word elem) {
+	protected Object[] getKeyValues(Palabra elem) {
 		// TODO Auto-generated method stub
 		Object[] keyValues= {elem.getId()};
 		return keyValues;
 	}
 
 	@Override
-	protected Word buildObject(ResultSet rs) throws SQLException {
+	protected Palabra buildObject(ResultSet rs) throws SQLException {
 		// TODO Auto-generated method stub
-		return null;
+		int idTabla = rs.getInt(getKeyColumnName()); //identificador de la tabla usuario (NICK)
+		String Caracteres = rs.getString("Caracteres");
+		String Texto = rs.getString("Texto");
+		Blob imagen = rs.getBlob("Imagen");
+		
+		byte[] fotoBytes = null;
+		if (imagen != null) {
+			fotoBytes = imagen.getBytes(1, (int)imagen.length());
+		}
+		
+		return new Palabra(idTabla, Caracteres, Texto, fotoBytes);
 	}
 
 	@Override
@@ -76,8 +89,24 @@ public class PalabrasMapper extends AbstractMapper<Word, Integer>{
 	}
 
 	@Override
-	protected void setValues(PreparedStatement pst, Word elem, boolean insert) {
+	protected void setValues(PreparedStatement pst, Palabra elem, boolean insert) {
 		// TODO Auto-generated method stub
+		try {
+			pst.setInt(1, elem.getId());//? correspondiente al nick (PK)
+			pst.setString(2,elem.getCaracteres());// ? corerspondiente a la contraseña 
+			pst.setString(3, elem.getTexto()); // ? correspondiente a la fecha FALLA NO SE XQ?
+			pst.setBytes(4, elem.getImagen());// ? correspondiente a la foto
+			
+			if(!insert){// si no es un insert (es un update) necesitamos rellenar el where con la PK 
+				pst.setInt(5, elem.getId());
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		
 	}
 

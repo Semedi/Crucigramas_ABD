@@ -52,7 +52,7 @@ public class Aplicacion {
 		_database = new DbManager();
 	}
 
-	@SuppressWarnings({ "deprecation", "unused" })
+	@SuppressWarnings({ "deprecation" })
 	public void login(String nick, String pass) {
 		// TODO Auto-generated method stub
 		
@@ -202,7 +202,7 @@ public class Aplicacion {
 		
 	
 		
-		List lista = lam.getListaAyuda(_user);
+		List<Object> lista = lam.getListaAyuda(_user);
 		Object[][] crucigramas = new Object[lista.size()][2];
 		
 		
@@ -244,7 +244,7 @@ public class Aplicacion {
 		
 		
 		
-		List lista =lcm.getLista(this._user);
+		List<Object> lista =lcm.getLista(this._user);
 		
 		Object[][] crucigramas = new Object[lista.size()][2];
 		int i = 0;
@@ -371,7 +371,7 @@ public class Aplicacion {
 
 
 
-	public Palabra[] getPalabras(String crucigrama) {
+	public Word[] getPalabras(String crucigrama) {
 		// TODO Auto-generated method stub
 		
 		CrucigramasMapper cm = new CrucigramasMapper(_database.getDataSource());
@@ -385,6 +385,7 @@ public class Aplicacion {
 	
 	
 	
+	@SuppressWarnings("deprecation")
 	public void modificar(String pass, String fecha, String ruta) {
 		// TODO Auto-generated method stub
 		

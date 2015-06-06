@@ -9,7 +9,6 @@ import java.util.List;
 
 import model.ListaCrucigramas;
 
-import org.apache.commons.lang3.StringUtils;
 
 import javax.sql.DataSource;
 
@@ -38,7 +37,18 @@ public class ListaCrucigramasMapper extends AbstractMapper<ListaCrucigramas, Str
 	@Override
 	protected ListaCrucigramas buildObject(ResultSet rs) throws SQLException {
 		// TODO Auto-generated method stub
-		return null;
+		
+		boolean activo;
+		
+		String nick = rs.getString("Nick");
+		int id = rs.getInt("id_crucigrama");
+		if (rs.getInt("Activo") == 1)
+			activo = true;
+		else
+			activo = false;
+		
+		
+		return new ListaCrucigramas(nick, id, activo);
 	}
 
 	@Override

@@ -15,9 +15,12 @@ public class QueryConditions {
 	public String getClave() {
 		return columName;
 	}
-	public void setClave(String clave) {
-		this.columName = columName;
+	
+	public void setClave(String clave){
+		
+		this.columName=clave;
 	}
+
 	public QueryOperator getOperator() {
 		return op;
 	}
@@ -27,7 +30,7 @@ public class QueryConditions {
 	public Object getValue() {
 		return value;
 	}
-	public void setVaue(Object value) {
+	public void setValue(Object value) {
 		this.value = value;
 	}
 	@Override

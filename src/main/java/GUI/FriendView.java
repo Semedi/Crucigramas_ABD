@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
@@ -14,7 +13,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
@@ -34,6 +32,10 @@ public class FriendView extends JPanel implements FriendObserver{
 	
 				private class AddFriend extends JFrame{
 					
+					/**
+					 * 
+					 */
+					private static final long serialVersionUID = 1L;
 					private JTextField _userText;
 					private Controlador _controlador;
 					

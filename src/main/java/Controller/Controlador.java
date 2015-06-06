@@ -8,7 +8,7 @@ import Observer.LoginObserver;
 import Observer.RequestObserver;
 import Observer.userObserver;
 import model.Aplicacion;
-import model.Palabra;
+import model.Word;
 
 public class Controlador {
 	
@@ -121,7 +121,7 @@ public class Controlador {
 	}
 
 
-	public Palabra[] getPalabras(String crucigrama) {
+	public Word[] getPalabras(String crucigrama) {
 		// TODO Auto-generated method stub
 		return app.getPalabras(crucigrama);
 	}

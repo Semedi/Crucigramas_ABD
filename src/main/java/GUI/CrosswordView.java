@@ -33,6 +33,10 @@ public class CrosswordView extends JPanel implements CrosswordObserver {
 	/* --------------------------------------------------------------------------------------------*/
 					private class SearchCrossword extends JFrame{
 						
+						/**
+						 * 
+						 */
+						private static final long serialVersionUID = 1L;
 						private JTextField _userText;
 						Controlador _controlador;
 						 DefaultListModel<String> _model;

@@ -4,9 +4,8 @@ import java.sql.SQLException;
 
 import model.Aplicacion;
 import Controller.Controlador;
-import GUI.GameView;
 import GUI.LoginView;
-import GUI.MainView;
+
 
 
 public class Main {

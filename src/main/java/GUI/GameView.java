@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import java.util.LinkedList;
 import java.util.List;
 
-import model.Palabra;
+import model.Word;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -30,8 +30,8 @@ public class GameView extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	
-	private List<Palabra> _lista; 
-	private CrosswordPanel<Palabra> _panel;
+	private List<Word> _lista; 
+	private CrosswordPanel<Word> _panel;
 	private Controlador _controlador;
 	
 	
@@ -40,18 +40,18 @@ public class GameView extends JFrame {
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		// Creamos la lista inicial con tres palabras
-		_lista = new LinkedList<Palabra>();
+		_lista = new LinkedList<Word>();
 		_controlador = controlador;
 		
 		
-		Palabra[] palabras = controlador.getPalabras(Crucigrama);
+		Word[] palabras = controlador.getPalabras(Crucigrama);
 		
 		
 		
 		
-		final Palabra word1 = new Palabra(1,2,"ERLANG",true);
-		final Palabra word2 = new Palabra(4,1,"HASKELL",false);
-		final Palabra word3 = new Palabra(1,6,"SCALA",true);
+		final Word word1 = new Word(1,2,"ERLANG",true);
+		final Word word2 = new Word(4,1,"HASKELL",false);
+		final Word word3 = new Word(1,6,"SCALA",true);
 		_lista.add(word1);
 		_lista.add(word2);
 		_lista.add(word3);
@@ -60,12 +60,12 @@ public class GameView extends JFrame {
 		// Lo incrustamos en un JScrollPane para obtener barras de desplazamiento
 		JScrollPane jScrollPane = new JScrollPane();
 		this.add(jScrollPane);		
-		_panel = new CrosswordPanel<Palabra>(jScrollPane, _lista);
+		_panel = new CrosswordPanel<Word>(jScrollPane, _lista);
 		jScrollPane.setViewportView(_panel);
 		
 		// Registramos los manejadores de eventos del CrosswordPanel
-        _panel.addEventListener(new CrosswordPanelEventListener<Palabra>() {
-            public void wordSelected(CrosswordPanel<Palabra> source, Palabra newPalabra) {
+        _panel.addEventListener(new CrosswordPanelEventListener<Word>() {
+            public void wordSelected(CrosswordPanel<Word> source, Word newPalabra) {
                 if (newPalabra != null) {
                     System.out.println("Seleccionada la palabra " + newPalabra.getWord());
                 } else {
@@ -73,7 +73,7 @@ public class GameView extends JFrame {
                 }
             }
 
-            public void cellSelected(CrosswordPanel<Palabra> source, Point newCell) {
+            public void cellSelected(CrosswordPanel<Word> source, Point newCell) {
                 if (newCell != null) {
                     System.out.println("Seleccionada la celda (" + newCell.x + ", " + newCell.y + ")");
                 } else {
@@ -81,7 +81,7 @@ public class GameView extends JFrame {
                 }
             }
 
-            public void deselected(CrosswordPanel<Palabra> source) {
+            public void deselected(CrosswordPanel<Word> source) {
                 System.out.println("DeselecciÃ³n!");
             }
         });

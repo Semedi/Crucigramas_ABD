@@ -1,7 +1,6 @@
 package GUI;
 
 import java.awt.Button;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -88,6 +87,7 @@ public class LoginView extends JFrame implements LoginObserver {
 		
 		loginButton.addActionListener(
 				new ActionListener() {					
+					@SuppressWarnings("deprecation")
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						
@@ -123,7 +123,7 @@ public class LoginView extends JFrame implements LoginObserver {
 	public void onLogin(String Username, ImageIcon avatar, int edad, String fecha, String pass) {
 		// TODO Auto-generated method stub
 		this.dispose();
-		MainView view =new MainView(_controlador, Username, avatar, edad, fecha, pass);
+		new MainView(_controlador, Username, avatar, edad, fecha, pass);
 		
 	}
 
@@ -154,6 +154,10 @@ public class LoginView extends JFrame implements LoginObserver {
 								
 				private class NewUser extends JFrame{
 					
+					/**
+					 * 
+					 */
+					private static final long serialVersionUID = 1L;
 					private JTextField _userText;
 					private JPasswordField _passwordText;
 					private JTextField _fecha;
@@ -265,6 +269,7 @@ public class LoginView extends JFrame implements LoginObserver {
 						
 						loginButton.addActionListener(
 								new ActionListener() {					
+									@SuppressWarnings("deprecation")
 									@Override
 									public void actionPerformed(ActionEvent e) {
 										
