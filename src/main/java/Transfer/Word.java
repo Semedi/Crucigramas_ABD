@@ -1,4 +1,4 @@
-package model;
+package Transfer;
 
 import es.ucm.abd.crossword.WordModel;
 
@@ -9,14 +9,24 @@ public class Word implements WordModel {
 	private int y;
 	private String word;
 	private boolean horizontal;
+	private String texto;
+	private byte[] foto;
 	
+	private int idP;
+	private int idC;
 	
+	private int _indice;
 
-	public Word(int x, int y, String word, boolean horizontal) {
+	public Word(int x, int y, String word, boolean horizontal, String texto, byte[] foto, int ind, int idP, int idC) {
 		this.x = x;
 		this.y = y;
 		this.word = word;
 		this.horizontal = horizontal;
+		this.texto=texto;
+		this.foto = foto;
+		_indice = ind;
+		this.idP=idP;
+		this.idC=idC;
 	}
 
 	public int getX() {
@@ -25,6 +35,11 @@ public class Word implements WordModel {
 
 	public int getY() {
 		return this.y;
+	}
+	
+	public int geti(){
+		
+		return _indice;
 	}
 
 	public boolean isHorizontal() {
@@ -39,6 +54,8 @@ public class Word implements WordModel {
 		result = prime * result + ((word == null) ? 0 : word.hashCode());
 		result = prime * result + x;
 		result = prime * result + y;
+		
+		
 		return result;
 	}
 
@@ -69,6 +86,22 @@ public class Word implements WordModel {
 	public String getWord() {
 		// TODO Auto-generated method stub
 		return this.word;
+	}
+
+	public String getTexto() {
+		return texto;
+	}
+
+	public void setTexto(String texto) {
+		this.texto = texto;
+	}
+
+	public byte[] getFoto() {
+		return foto;
+	}
+
+	public void setFoto(byte[] foto) {
+		this.foto = foto;
 	}
 
 	

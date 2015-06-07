@@ -2,6 +2,7 @@ package GUI;
 
 import java.awt.BorderLayout;
 import java.awt.Button;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -78,8 +79,9 @@ public class MainView extends JFrame implements userObserver {
 		
 		
 		
-		 avatar = new JButton("");	
+		avatar = new JButton("");	
 		avatar.setBorderPainted(false);
+		avatar.setPreferredSize(new Dimension(150,30));
 	
 		
 			
@@ -112,11 +114,12 @@ public class MainView extends JFrame implements userObserver {
 		aux.add(infoPuntos, BorderLayout.SOUTH);
 		
 		aux.setBorder(BorderFactory.createEmptyBorder(30,0,30,0));
+		
 	
 		
 		
 		cabecera.add(avatar, BorderLayout.WEST);
-		cabecera.add(aux, BorderLayout.CENTER);
+		cabecera.add(aux);
 		
 		
 	

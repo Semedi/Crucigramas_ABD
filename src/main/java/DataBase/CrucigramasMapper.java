@@ -10,6 +10,7 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
+import model.CrContienePa;
 import model.Crucigrama;
 
 
@@ -139,6 +140,34 @@ public class CrucigramasMapper extends AbstractMapper<Crucigrama, Integer> {
 		Object[] keyValues= {elem.getId()};
 		return keyValues;
 	}
+
+	
+	public Crucigrama findByName(String name){
+		
+		String sql = "SELECT * from "+getTableName()+ " WHERE Titulo = ?";
+		
+		
+		try (Connection con = ds.getConnection();
+				 PreparedStatement pst = con.prepareStatement(sql)) {
+				
+				pst.setString(1, name);
+				
+				try(ResultSet rs = pst.executeQuery()) {
+					if (rs.next()) {
+						return buildObject(rs);
+					} else {
+						return null;
+					}
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return null;
+			}
+		
+		
+		
+	}
+
 
 
 

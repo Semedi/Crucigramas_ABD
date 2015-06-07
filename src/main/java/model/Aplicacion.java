@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,10 +23,12 @@ import javax.imageio.stream.ImageInputStream;
 import javax.swing.ImageIcon;
 
 import DataBase.AmigosMapper;
+import DataBase.CrContienePaMapper;
 import DataBase.CrucigramasMapper;
 import DataBase.DbManager;
 import DataBase.ListaAyudaMapper;
 import DataBase.ListaCrucigramasMapper;
+import DataBase.PalabrasMapper;
 import DataBase.UsuariosMapper;
 import GUI.LoginView;
 import Observer.CrosswordObserver;
@@ -33,6 +36,7 @@ import Observer.FriendObserver;
 import Observer.LoginObserver;
 import Observer.RequestObserver;
 import Observer.userObserver;
+import Transfer.Word;
 
 public class Aplicacion {
 
@@ -101,7 +105,7 @@ public class Aplicacion {
 		
 		}
 		
-		System.out.println(date);
+		
 		
 		UsuariosMapper um = new UsuariosMapper(_database.getDataSource());
 		Usuario u = new Usuario(nick, pass,date,blob );
@@ -263,11 +267,10 @@ public class Aplicacion {
 		}
 		
 		return crucigramas;
-		
-		
-		
+			
 	}
 
+	
 	public String[] buscarCrucigramas(String text) {
 		// TODO Auto-generated method stub
 		
@@ -309,16 +312,19 @@ public class Aplicacion {
 		
 	}
 
+	
+	
+	
 	public List<Object> getAmigos() {
 		// TODO Auto-generated method stub
 		AmigosMapper am = new AmigosMapper(_database.getDataSource());
 		
 		return am.getListaAmigos(_user);
 		
-		
-		
-		
-	}
+		}
+	
+	
+	
 
 	public void addFriend(String amigo) {
 		// TODO Auto-generated method stub
@@ -368,19 +374,48 @@ public class Aplicacion {
 		_robs.onDelete();
 		
 	}
-
-
-
-	public Word[] getPalabras(String crucigrama) {
+	
+	
+	public void answer() {
 		// TODO Auto-generated method stub
 		
+	}
+
+
+
+
+	public List<Word> getPalabras(String crucigrama) {
+		// TODO Auto-generated method stub
+		
+		List<Word> lista = new LinkedList<Word>();
+		
+		CrContienePaMapper contains = new CrContienePaMapper(_database.getDataSource());
 		CrucigramasMapper cm = new CrucigramasMapper(_database.getDataSource());
-		
-		Crucigrama aux=cm.findById(cm.getLista(crucigrama).get(0));
-		
+		PalabrasMapper pm = new PalabrasMapper(_database.getDataSource());
 		
 		
-		return null;
+		List<CrContienePa> listaRelaciones = contains.getPalabras(cm.findByName(crucigrama).getId());
+		Palabra palabra;
+		CrContienePa relacion;
+		boolean horizontal;
+		
+		Word transfer;
+		
+		
+		for (int i = 0; i < listaRelaciones.size(); i++){
+			
+			relacion = listaRelaciones.get(i);
+			palabra = pm.findById(relacion.getId_palabra());
+			horizontal = (relacion.getOrientacion().equalsIgnoreCase("horizontal"));
+			
+			transfer = new Word(relacion.getX(), relacion.getY(), palabra.getCaracteres(), horizontal, palabra.getTexto(), palabra.getImagen(), i, relacion.getId_palabra(), relacion.getId_crucigrama());
+			
+			
+			lista.add(transfer);
+		}
+		
+		return lista;
+	
 	}
 	
 	
@@ -448,7 +483,7 @@ public class Aplicacion {
 				for (int readNum; (readNum = fis.read(buf)) != -1;) {
 					// Writes to this byte array output stream
 					bos.write(buf, 0, readNum);
-					System.out.println("read " + readNum + " bytes,");
+					
 				}
 			} catch (IOException ex) {
 				Logger.getLogger(Aplicacion.class.getName()).log(Level.SEVERE,
@@ -502,6 +537,14 @@ public class Aplicacion {
 
 	}// Image converter
 
+
+
+
+
+
+
+
+	
 
 
 

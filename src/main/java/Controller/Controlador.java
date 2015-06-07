@@ -7,8 +7,8 @@ import Observer.FriendObserver;
 import Observer.LoginObserver;
 import Observer.RequestObserver;
 import Observer.userObserver;
+import Transfer.Word;
 import model.Aplicacion;
-import model.Word;
 
 public class Controlador {
 	
@@ -121,7 +121,7 @@ public class Controlador {
 	}
 
 
-	public Word[] getPalabras(String crucigrama) {
+	public List<Word> getPalabras(String crucigrama) {
 		// TODO Auto-generated method stub
 		return app.getPalabras(crucigrama);
 	}
@@ -130,6 +130,12 @@ public class Controlador {
 	public void modificar(String pass, String fecha, String ruta) {
 		// TODO Auto-generated method stub
 		app.modificar(pass, fecha, ruta);	
+	}
+
+
+	public void answer() {
+		// TODO Auto-generated method stub
+		app.answer();
 	}
 	
 

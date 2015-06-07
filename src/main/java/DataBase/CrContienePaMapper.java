@@ -1,8 +1,11 @@
 package DataBase;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -107,6 +110,43 @@ public class CrContienePaMapper extends AbstractMapper<CrContienePa, Integer[]> 
 		
 		
 		
+	}
+
+	
+	//SELECT * FROM `crucigrama_contiene_palabra` WHERE id_crucigrama =1
+	public List<CrContienePa> getPalabras(Integer id) {
+		// TODO Auto-generated method stub
+		
+		ArrayList<CrContienePa> lista = new ArrayList<CrContienePa>();
+		String tableName = getTableName();
+		String keyColumnName = "id_crucigrama";
+		
+		
+		String sql = "SELECT * FROM "+ tableName + " WHERE "+ keyColumnName +  " = ?";
+		
+		try ( Connection con = ds.getConnection();
+				
+				PreparedStatement pst = con.prepareStatement(sql)){
+				pst.setInt(1, id);
+				
+				
+				try(ResultSet rs = pst.executeQuery()) {
+					while (rs.next())
+						lista.add(buildObject(rs));
+					
+				}
+				
+			
+		} catch (SQLException e){
+			e.printStackTrace();
+			return null;
+			
+		}
+		
+		
+		
+		
+		return lista;
 	}
 
 }
