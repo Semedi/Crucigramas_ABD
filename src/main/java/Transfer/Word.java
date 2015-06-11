@@ -25,8 +25,8 @@ public class Word implements WordModel {
 		this.texto=texto;
 		this.foto = foto;
 		_indice = ind;
-		this.idP=idP;
-		this.idC=idC;
+		this.setIdP(idP);
+		this.setIdC(idC);
 	}
 
 	public int getX() {
@@ -102,6 +102,22 @@ public class Word implements WordModel {
 
 	public void setFoto(byte[] foto) {
 		this.foto = foto;
+	}
+
+	public int getIdP() {
+		return idP;
+	}
+
+	public void setIdP(int idP) {
+		this.idP = idP;
+	}
+
+	public int getIdC() {
+		return idC;
+	}
+
+	public void setIdC(int idC) {
+		this.idC = idC;
 	}
 
 	

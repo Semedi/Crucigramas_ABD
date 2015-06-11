@@ -1,8 +1,11 @@
 package DataBase;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -53,7 +56,7 @@ public class HistorialMapper extends AbstractMapper<Historial, Object[]> {
 	protected Historial buildObject(ResultSet rs) throws SQLException {
 		// TODO Auto-generated method stub
 		Historial nuevo = new Historial(rs.getString("Nick1"), rs.getInt("id_palabra"), rs.getInt("id_crucigrama"), rs.getString("Respuesta"), rs.getTimestamp("Fecha"));
-		if (!rs.getString("nick2").isEmpty())
+		if (rs.getString("nick2")!= null)
 			nuevo.setNick2(rs.getString("nick2"));
 	
 		return nuevo;
@@ -105,5 +108,42 @@ try {
 		
 		
 	}
+	
+	
+	//SELECT * FROM `historial` WHERE Nick1="sergio" and id_crucigrama = 1
+	public List<String> getPalabras(String user, int idC){
+		
+		List<String> lista = new ArrayList<String>();
+
+		
+		
+		String tableName = getTableName();
+		String[] columnNames = getTableColumns();
+		
+		String sql = "SELECT * FROM "
+				+ tableName + " WHERE "+ columnNames[0] + " = ? AND "+ columnNames[3]+" = ?";
+		try (Connection con = ds.getConnection();
+			 PreparedStatement pst = con.prepareStatement(sql)) {
+			
+			pst.setString(1, user);
+			pst.setInt(2, idC);
+			
+			
+			
+			try(ResultSet rs = pst.executeQuery()) {
+				while(rs.next()){
+					lista.add(rs.getString("Respuesta"));
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+		return lista;		
+		
+	
+	}
+	
 
 }

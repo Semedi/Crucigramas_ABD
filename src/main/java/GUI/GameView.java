@@ -12,6 +12,7 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -49,11 +50,14 @@ public class GameView extends JFrame {
 	private JButton _enviar;
 	private JLabel _xletras;
 	
+	private boolean _acertadas[];
+	
 	
 	
 	public GameView(Controlador controlador, String Crucigrama) {
 		super(Crucigrama);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
 		
 		JPanel juego = new JPanel();
 		juego.setLayout(new BorderLayout());
@@ -68,9 +72,12 @@ public class GameView extends JFrame {
 		/********************************************************************************************************/
 		
 		_lista = _controlador.getPalabras(Crucigrama);
+	
 		
+		if (_lista.size()>0)
+			_acertadas=_controlador.getAcertadas(_lista.get(0).getIdC(), _lista);
 		
-			
+	
 		// Creamos el CrosswordPanel a partir de la lista.
 		// Lo incrustamos en un JScrollPane para obtener barras de desplazamiento
 		JScrollPane jScrollPane = new JScrollPane();
@@ -108,6 +115,12 @@ public class GameView extends JFrame {
             }
         });
         
+        
+    	for (int i = 0; i < _acertadas.length; i++){
+			if (_acertadas[i])
+				_panel.showWord(_lista.get(i));		
+		}
+			
         
         
         // AÃ±adimos un botÃ³n para mostrar las palabras del crucigrama
@@ -153,13 +166,40 @@ public class GameView extends JFrame {
 			_aceptar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					
-					if (_respuesta.getText().equalsIgnoreCase(_lista.get(_selected).getWord())){
-						_panel.showWord(_lista.get(_selected));
+					
+					if(!_acertadas[_selected]){
+						if (_respuesta.getText().equalsIgnoreCase(_lista.get(_selected).getWord())){
+							_panel.showWord(_lista.get(_selected));
+							
+							_acertadas[_selected] = true;
+						}
+							
+						
+						else{
+							
+							JOptionPane.showMessageDialog(null,
+									"Palabra incorrecta",
+									"Info",
+									JOptionPane.INFORMATION_MESSAGE
+									);
+							
+						}
+						_controlador.answer(null, _respuesta.getText(), _lista.get(_selected).getIdP(), _lista.get(_selected).getIdC());
+				
+					}else{
+						
+						JOptionPane.showMessageDialog(null,
+								"ya respondida",
+								"Info",
+								JOptionPane.INFORMATION_MESSAGE
+								);
+						
 						
 					}
+					
+			
 				
-						
-				_controlador.answer();
+				
 				}
 			});
 			

@@ -133,10 +133,19 @@ public class Controlador {
 	}
 
 
-	public void answer() {
+	public void answer(String usuario, String respuesta, int palabra, int crucigrama) {
 		// TODO Auto-generated method stub
-		app.answer();
+		app.answer(usuario, respuesta, palabra, crucigrama);
 	}
+
+
+	public boolean[] getAcertadas(int idC, List<Word> _lista) {
+		// TODO Auto-generated method stub
+		return app.getAcertadas(idC, _lista);
+	}
+
+
+	
 	
 
 

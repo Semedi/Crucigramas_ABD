@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -26,6 +27,7 @@ import DataBase.AmigosMapper;
 import DataBase.CrContienePaMapper;
 import DataBase.CrucigramasMapper;
 import DataBase.DbManager;
+import DataBase.HistorialMapper;
 import DataBase.ListaAyudaMapper;
 import DataBase.ListaCrucigramasMapper;
 import DataBase.PalabrasMapper;
@@ -376,8 +378,28 @@ public class Aplicacion {
 	}
 	
 	
-	public void answer() {
+	public void answer(String usr, String respuesta, int palabra, int crucigrama) {
 		// TODO Auto-generated method stub
+		
+		// 1) create a java calendar instance
+		Calendar calendar = Calendar.getInstance();
+		 
+		// 2) get a java.util.Date from the calendar instance.
+//		    this date will represent the current instant, or "now".
+		java.util.Date now = calendar.getTime();
+		 
+		// 3) a java current time (now) instance
+		java.sql.Timestamp current = new java.sql.Timestamp(now.getTime());
+		
+		HistorialMapper hm = new HistorialMapper(_database.getDataSource());
+		
+		Historial h = new Historial(_user, palabra, crucigrama, respuesta,  current);
+		
+		if (usr != null)
+			h.setNick2(usr);
+			
+		
+		hm.insert(h);
 		
 	}
 
@@ -451,6 +473,25 @@ public class Aplicacion {
 	}
 
 
+
+	public boolean[] getAcertadas(int idC, List<Word> palabras) {
+		// TODO Auto-generated method stub
+		boolean acertadas[] = new boolean[palabras.size()];
+		
+		HistorialMapper hm = new HistorialMapper(_database.getDataSource());
+		
+		List<String> lista =hm.getPalabras(_user, idC);
+		
+		
+		for (int i = 0; i < palabras.size(); i++)
+			acertadas[i] = lista.contains(palabras.get(i).getWord());
+						
+		
+		
+	
+		
+		return acertadas;
+	}
 
 
 	
@@ -536,6 +577,13 @@ public class Aplicacion {
 		}
 
 	}// Image converter
+
+
+
+
+
+
+
 
 
 
